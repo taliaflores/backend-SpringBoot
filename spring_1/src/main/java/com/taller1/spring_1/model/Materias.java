@@ -5,8 +5,15 @@ public class Materias {
 	public String sigla;
 	public String nombre;
 	public String nivel;
-	//public String estado;
+	public int estado;
 	
+	
+	public int getEstado() {
+		return estado;
+	}
+	public void setEstado(int estado) {
+		this.estado = estado;
+	}
 	public String getSigla() {
 		return sigla;
 	}

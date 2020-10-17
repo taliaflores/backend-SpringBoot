@@ -24,9 +24,12 @@ public class MateriasManger {
 		jdbcTemplate = new JdbcTemplate(datasourse2); 
 	}
 	
-	public List<Materias> listaMaterias(){
-		String xsql = " select sigla, nombre, nivel from materias   ";
-	
+	public List<Materias> listaMaterias(int xest1){
+		
+		String xsql = " select sigla, nombre, nivel, estado  "
+				+"  from materias   "
+				+"  where estado=?"
+				+"  order by nombre";
 		List mat1 = this.jdbcTemplate.query(
 				xsql,
 				new RowMapper() {
@@ -35,18 +38,18 @@ public class MateriasManger {
 						ma.setSigla(rs.getString("sigla"));
 						ma.setNombre(rs.getString("nombre"));
 						ma.setNivel(rs.getString("nivel"));
-						
-					
+						ma.setEstado(rs.getInt("estado"));		
 						return ma;
 					}	
-				}, new Object[] {});
+				}, new Object[] {xest1});
 				
 			return mat1;
 	}
+	
 //METODO ADICIONAR MATERIA
-	public int setAddMaterias(String xsigla, String xnombre, String xnivel) {
-		String xsql = " insert into materias(sigla, nombre, nivel) values (?, ?, ?)";
-		return this.jdbcTemplate.update(xsql, xsigla, xnombre, xnivel);
+	public int setAddMaterias(String xsigla, String xnombre, String xnivel, int xestado) {
+		String xsql = " insert into materias(sigla, nombre, nivel, estado) values (?, ?, ?,?)";
+		return this.jdbcTemplate.update(xsql, xsigla, xnombre, xnivel, xestado);
 	//utilizaremos update para insertar
 	}
 	

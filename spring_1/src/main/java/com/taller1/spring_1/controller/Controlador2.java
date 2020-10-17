@@ -33,17 +33,16 @@ public class Controlador2 {
 		return "HOLA MUNDO - TALLER 1 - GESTION 2020";
 	}
 */
-	@GetMapping("/api/listaMaterias")
-	public List<Materias> listaMaterias(Model model){
-	
-		List<Materias> lisMa = this.materiasManager.listaMaterias();
-		System.out.println("Listar Materias");
-		return lisMa;
+	@GetMapping("/api/listaMaterias/{xestado}")
+	public List<Materias> listaAlumnos(Model model, @PathVariable("xestado") String xestado){
+		int  xmat = Integer.parseInt(xestado);
+		List<Materias> lisMat = this.materiasManager.listaMaterias(xmat);
+		return lisMat;
 	}
 	@PostMapping("/api/addMaterias")
 	public int guardandoMaterias (@RequestBody Materias ma){
 		try {
-			int  rest1 = this.materiasManager.setAddMaterias(ma.sigla,ma.nombre, ma.nivel);
+			int  rest1 = this.materiasManager.setAddMaterias(ma.sigla,ma.nombre, ma.nivel,1);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
