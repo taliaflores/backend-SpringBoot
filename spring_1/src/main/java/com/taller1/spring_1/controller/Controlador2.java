@@ -33,14 +33,17 @@ public class Controlador2 {
 		return "HOLA MUNDO - TALLER 1 - GESTION 2020";
 	}
 */
+	//>>>>>MetodoListar  GET
 	@GetMapping("/api/listaMaterias/{xestado}")
 	public List<Materias> listaAlumnos(Model model, @PathVariable("xestado") String xestado){
 		int  xmat = Integer.parseInt(xestado);
 		List<Materias> lisMat = this.materiasManager.listaMaterias(xmat);
 		return lisMat;
 	}
+	
+	//>>>>>MetodoAdicionanar POST
 	@PostMapping("/api/addMaterias")
-	public int guardandoMaterias (@RequestBody Materias ma){
+	public int guardandoMaterias(@RequestBody Materias ma){
 		try {
 			int  rest1 = this.materiasManager.setAddMaterias(ma.sigla,ma.nombre, ma.nivel,1);
 		} catch (Exception e) {
@@ -48,15 +51,30 @@ public class Controlador2 {
 		}
 		return 2;
 	}
-	@DeleteMapping("/api/delMateria/{sigla}")
-	public int eliminarMaterias(@PathVariable("sigla") String xsigla){
-		int  rest = this.materiasManager.setDelMaterias(xsigla);
-		return 3;
-	}
+	//>>>>>MetodoModificar PUT
 	@PutMapping("/api/modMaterias")
 	public Materias modificarAlumnos (@RequestBody Materias ma){
 		System.out.println("Proceso de Modificacion de la materia........... -> "+ma.getNombre());
 			int  rest1 = this.materiasManager.setModMaterias(ma.sigla, ma.nombre, ma.nivel);
 		return ma;
+	}
+	
+	
+	//>>>>>MetodoEliminar  DELETE  (FISICAMENTE) 
+	@DeleteMapping("/api/delMateria/{sigla}")
+	public int eliminarMaterias(@PathVariable("sigla") String xsigla){
+		int  rest = this.materiasManager.setDelMaterias(xsigla);
+		return 3;
+	}
+	
+	
+	//>>>>>MetodoEliminar  DELETE  (logicamente) setEliminacionLogicaMat
+	
+	@PutMapping("/api/modEstadoMa/{sigla}")
+	public int modificarAlumnos (@PathVariable("sigla") String xsigla){
+		System.out.println("Proceso de Eliminacion Logica............de  -> "+xsigla);
+	
+			int  rest1 = this.materiasManager.setEliminacionLogicaMat(xsigla);
+		return 4;
 	}
 }

@@ -23,7 +23,7 @@ public class MateriasManger {
 	public void setDataSource(DataSource datasourse2){
 		jdbcTemplate = new JdbcTemplate(datasourse2); 
 	}
-	
+//>>>>>>>Listar_Materias  GET	
 	public List<Materias> listaMaterias(int xest1){
 		
 		String xsql = " select sigla, nombre, nivel, estado  "
@@ -46,26 +46,36 @@ public class MateriasManger {
 			return mat1;
 	}
 	
-//METODO ADICIONAR MATERIA
+//>>>>>>>>>>METODO ADICIONAR MATERIA
 	public int setAddMaterias(String xsigla, String xnombre, String xnivel, int xestado) {
 		String xsql = " insert into materias(sigla, nombre, nivel, estado) values (?, ?, ?,?)";
 		return this.jdbcTemplate.update(xsql, xsigla, xnombre, xnivel, xestado);
 	//utilizaremos update para insertar
 	}
 	
-//METODO DE ELIMINACION	
-	public int setDelMaterias(String xsigla) {
-			String xsql = " delete from materias where sigla=? ";
-			return this.jdbcTemplate.update(xsql, xsigla);
-		//utilizaremos update para insertar
-	}	
 
-//METODO DE MODIFICACION
+
+//>>>>>>>>>>METODO DE MODIFICACION
 
 	public int setModMaterias(String xsigla, String xnombre, String xnivel) {
 		String xsql = " update materias "
 				+"set nombre =?, nivel=? "
-				+" where sigla=? ";
+				+" where sigla=?";
 	return this.jdbcTemplate.update(xsql, xnombre, xnivel, xsigla);
 	}
+//METODO DE ELIMINACION	
+	public int setDelMaterias(String xsigla) {
+		String xsql = " delete from materias where sigla=? ";
+		return this.jdbcTemplate.update(xsql, xsigla);
+		//utilizaremos update para insertar
+	}		
+//>>>>>>>>>>METODO DE ELIMINACION LOGICA	
+	
+	public int setEliminacionLogicaMat(String xsigla) {
+		String xsql = " update materias "
+				+"set estado =0 "
+				+" where sigla=? ";
+		return this.jdbcTemplate.update(xsql, xsigla);
+}
+	
 }
