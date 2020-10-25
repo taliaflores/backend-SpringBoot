@@ -45,7 +45,29 @@ public class MateriasManger {
 				
 			return mat1;
 	}
-	
+////>>>>>>>Listar_MateriasTODO  GET	
+	public List<Materias> listaMateriasTodo(){
+		
+		String xsql = " select sigla, nombre, nivel, estado  "
+				+"  from materias "
+				+"  where estado=1 or estado=0"
+				+"  order by sigla";
+		
+		List mat1 = this.jdbcTemplate.query(
+				xsql,
+				new RowMapper() {
+					public Object mapRow(ResultSet rs, int rowNum)throws SQLException{
+						Materias ma = new Materias();
+						ma.setSigla(rs.getString("sigla"));
+						ma.setNombre(rs.getString("nombre"));
+						ma.setNivel(rs.getString("nivel"));
+						ma.setEstado(rs.getInt("estado"));		
+						return ma;
+					}	
+				}, new Object[] {});
+				
+			return mat1;
+	}	
 //>>>>>>>>>>METODO ADICIONAR MATERIA
 	public int setAddMaterias(String xsigla, String xnombre, String xnivel, int xestado) {
 		String xsql = " insert into materias(sigla, nombre, nivel, estado) values (?, ?, ?,?)";
@@ -58,7 +80,7 @@ public class MateriasManger {
 //>>>>>>>>>>METODO DE MODIFICACION
 
 	public int setModMaterias(String xsigla, String xnombre, String xnivel) {
-		String xsql = " update materias "
+		String xsql = "update materias "
 				+"set nombre =?, nivel=? "
 				+" where sigla=?";
 	return this.jdbcTemplate.update(xsql, xnombre, xnivel, xsigla);
@@ -71,9 +93,15 @@ public class MateriasManger {
 	}		
 //>>>>>>>>>>METODO DE ELIMINACION LOGICA	
 	
-	public int setEliminacionLogicaMat(String xsigla) {
+	public int setEliminacionLogicaMat1(String xsigla) {
 		String xsql = " update materias "
 				+"set estado =0 "
+				+" where sigla=? ";
+		return this.jdbcTemplate.update(xsql, xsigla);
+}
+	public int setEliminacionLogicaMat2(String xsigla) {
+		String xsql = " update materias "
+				+"set estado =1 "
 				+" where sigla=? ";
 		return this.jdbcTemplate.update(xsql, xsigla);
 }

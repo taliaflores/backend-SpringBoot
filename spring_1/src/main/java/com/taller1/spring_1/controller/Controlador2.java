@@ -33,11 +33,20 @@ public class Controlador2 {
 		return "HOLA MUNDO - TALLER 1 - GESTION 2020";
 	}
 */
+	
+	
 	//>>>>>MetodoListar  GET
 	@GetMapping("/api/listaMaterias/{xestado}")
 	public List<Materias> listaAlumnos(Model model, @PathVariable("xestado") String xestado){
 		int  xmat = Integer.parseInt(xestado);
 		List<Materias> lisMat = this.materiasManager.listaMaterias(xmat);
+		return lisMat;
+	}
+	//>>>>>MetodoListar  GET
+	@GetMapping("/api/listaMateriasTodo")
+	public List<Materias> listamat(Model model){
+		
+		List<Materias> lisMat = this.materiasManager.listaMateriasTodo();
 		return lisMat;
 	}
 	
@@ -54,7 +63,7 @@ public class Controlador2 {
 	//>>>>>MetodoModificar PUT
 	@PutMapping("/api/modMaterias")
 	public Materias modificarAlumnos (@RequestBody Materias ma){
-		System.out.println("Proceso de Modificacion de la materia........... -> "+ma.getNombre());
+		System.out.println("Proceso de Modificacion de la materia........... -> "+ma.getNivel());
 			int  rest1 = this.materiasManager.setModMaterias(ma.sigla, ma.nombre, ma.nivel);
 		return ma;
 	}
@@ -70,11 +79,28 @@ public class Controlador2 {
 	
 	//>>>>>MetodoEliminar  DELETE  (logicamente) setEliminacionLogicaMat
 	
-	@PutMapping("/api/modEstadoMa/{sigla}")
-	public int modificarAlumnos (@PathVariable("sigla") String xsigla){
+	@PutMapping("/api/modEstadoMa11/{sigla}")
+	public int modificarAlumnos11 (@PathVariable("sigla") String xsigla){
 		System.out.println("Proceso de Eliminacion Logica............de  -> "+xsigla);
 	
-			int  rest1 = this.materiasManager.setEliminacionLogicaMat(xsigla);
-		return 4;
+			int  rest1 = this.materiasManager.setEliminacionLogicaMat1(xsigla);
+		return 5;
 	}
+
+	//_____________________________________________
+	
+	@DeleteMapping("/api/modEstadoMa1/{sigla}")
+	public int modificarAlumnos1(@PathVariable("sigla") String xsigla){
+		int  rest = this.materiasManager.setEliminacionLogicaMat1(xsigla);
+		return 9;
+	}
+	
+	@DeleteMapping("/api/modEstadoMa2/{sigla}")
+	public int modificarAlumnos2(@PathVariable("sigla") String xsigla){
+		int  rest = this.materiasManager.setEliminacionLogicaMat2(xsigla);
+		return 9;
+	}
+	
+	
+	
 }
